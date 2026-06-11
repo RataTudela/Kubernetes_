@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoreo-deployment
+  labels:
+    app: monitoreo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monitoreo
+  template:
+    metadata:
+      labels:
+        app: monitoreo
+    spec:
+      containers:
+        - name: monitoreo-app
+          image: ratatudela/monitoreo-service:v1 
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: monitoreo-service
+spec:
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: monitoreo

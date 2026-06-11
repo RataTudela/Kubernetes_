@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usuarios-deployment
+  labels:
+    app: usuarios
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: usuarios
+  template:
+    metadata:
+      labels:
+        app: usuarios
+    spec:
+      containers:
+        - name: usuarios-app
+          image: ratatudela/usuarios-service:v1 
+          ports:
+            - containerPort: 8080
+          env:
+            - name: RABBITMQ_HOST
+              value: "rabbitmq-service"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usuarios-service 
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: usuarios

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # 1. Mensajería
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    # 🌟 LE DECIMOS A DOCKER CÓMO SABER SI RABBITMQ ESTÁ LISTO REALMENTE
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Microservicio Usuarios
+  usuarios-service:
+    build: ./Usuarios-main
+    ports:
+      - "8080:8080"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    # 🌟 ESPERA A QUE RABBITMQ PASE EL CHEQUEO DE SALUD
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  # 3. Microservicio Proyectos
+  proyectos-service:
+    build: ./Innovatech-Proyectos-main
+    ports:
+      - "8067:8067"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    # 🌟 ESPERA A QUE RABBITMQ PASE EL CHEQUEO DE SALUD
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  # 4. Microservicio Analítica (FastAPI)
+  monitoreo-service:
+    build: ./g_microservicio_monitoreo_analitica-main
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - DATABASE_URL=postgresql://neondb_owner:npg_DOr32IgmeUGC@ep-jolly-forest-a4hn1jmr-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
+      - USUARIOS_SERVICE_URL=http://usuarios-service:8080
+      - PROYECTOS_SERVICE_URL=http://proyectos-service:8067
+
+  # 5. API Gateway
+  api-gateway:
+    build: ./gateway-main
+    ports:
+      - "8081:8081"
+    environment:
+      - USUARIOS_SERVICE_URL=http://usuarios-service:8080
+      - PROYECTOS_SERVICE_URL=http://proyectos-service:8067
+      - MONITOREO_SERVICE_URL=http://monitoreo-service:8000
+
+  # 6. Frontend (React)
+  frontend:
+    build: ./mi-frontend-main
+    ports:
+      - "80:80"

@@ -55,10 +55,15 @@ async def recolectar_datos_desde_frontend(
     for p in datos_proyectos:
         id_p = p.get("id_proyecto")
         completadas = p.get("tareas_completadas", 0)
-        totales = p.get("tareas_totales", 1)
+        totales = p.get("tareas_totales", 0)
         
-        # Cálculo del avance
-        avance = (completadas / totales) * 100
+        # 🌟 ESCUDO ANTIBOMBAS: Si totales es 0 o menor, el avance es 0.0 sin dividir.
+        if totales > 0:
+            avance = (completadas / totales) * 100
+        else:
+            avance = 0.0
+            totales = 0  # Nos aseguramos de mantenerlo limpio
+            
         suma_avances += avance
         
         if avance < 40:
