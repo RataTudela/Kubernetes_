@@ -33,7 +33,7 @@ public class CargaTrabajoService {
         if (saved.getIdTarea() != null) {
             Map<String, Object> mensaje = new HashMap<>();
             mensaje.put("idTarea", saved.getIdTarea());
-            mensaje.put("estado", "en progreso");
+            mensaje.put("estado", "EN_PROCESO");
 
             rabbitTemplate.convertAndSend(
                 RabbitMqConfig.EXCHANGE_USUARIOS,

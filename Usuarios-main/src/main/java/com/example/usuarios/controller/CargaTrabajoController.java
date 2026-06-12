@@ -1,15 +1,15 @@
 package com.example.usuarios.controller;
 
-import java.util.List;
-
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import com.example.usuarios.config.RabbitMqConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PatchMapping;
+
+import com.example.usuarios.config.RabbitMqConfig;
 import com.example.usuarios.model.CargaTrabajo;
 import com.example.usuarios.service.CargaTrabajoService;
 
@@ -87,7 +88,7 @@ public class CargaTrabajoController {
 public ResponseEntity<?> finalizarTarea(@PathVariable Long idTarea, @PathVariable Long idCarga) {
     Map<String, Object> mensaje = new HashMap<>();
     mensaje.put("idTarea", idTarea);
-    mensaje.put("estado", "completada"); 
+    mensaje.put("estado", "FINALIZADO"); 
 
     rabbitTemplate.convertAndSend(
         RabbitMqConfig.EXCHANGE_USUARIOS, 
