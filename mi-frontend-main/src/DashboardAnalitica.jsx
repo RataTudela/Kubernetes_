@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios"; // Importación limpia y estándar de Axios
 
-// Configuración de URLs a través del Gateway (puerto 8081)
-const API_ANALISIS = "http://localhost:8081/api/analisis";
-const API_PROYECTOS = "http://localhost:8081/api/proyectos/proyecto";
+// Configuración de URLs a través del Gateway (puerto 30081)
+const API_ANALISIS = "http://localhost:30081/api/analisis";
+const API_PROYECTOS = "http://localhost:30081/api/proyectos/proyecto";
 
 export default function DashboardAnalitica() {
   // 1. Estado inicial consolidado

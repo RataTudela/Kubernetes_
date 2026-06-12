@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend-app
-          image: ratatudela/frontend-react:v1 
+          image: ratatudela/mi-frontend:latest
           ports:
             - containerPort: 80
 ---
@@ -25,8 +25,9 @@ kind: Service
 metadata:
   name: frontend-service
 spec:
+  type: LoadBalancer # 🌟 CAMBIADO: De NodePort a LoadBalancer
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 30080      # 🌟 El puerto real que vas a escribir en tu navegador
+      targetPort: 80    # El puerto interno del contenedor de React
   selector:
     app: frontend

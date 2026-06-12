@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_PROYECTOS = "http://localhost:8081/api/proyectos/proyecto";
-const API_TAREAS = "http://localhost:8081/api/proyectos/tareas";
+const API_PROYECTOS = "http://localhost:30081/api/proyectos/proyecto";
+const API_TAREAS = "http://localhost:30081/api/proyectos/tareas";
 
 export default function Proyectos() {
 
@@ -128,7 +128,7 @@ export default function Proyectos() {
     try {
 
       const response = await axios.get(
-        `http://localhost:8081/api/proyectos/${proyecto.idProyecto}/tareas`
+        `http://localhost:30081/api/proyectos/${proyecto.idProyecto}/tareas`
       );
 
       setTareas(response.data);
@@ -176,7 +176,7 @@ const guardarTarea = async (e) => {
     }
 
     const response = await axios.get(
-      `http://localhost:8081/api/proyectos/${proyectoSeleccionado.idProyecto}/tareas`
+      `http://localhost:30081/api/proyectos/${proyectoSeleccionado.idProyecto}/tareas`
     );
 
     setTareas(response.data);
@@ -220,7 +220,7 @@ const eliminarTarea = async (id) => {
     await axios.delete(`${API_TAREAS}/${id}`);
 
     const response = await axios.get(
-      `http://localhost:8081/api/proyectos/${proyectoSeleccionado.idProyecto}/tareas`
+      `http://localhost:30081/api/proyectos/${proyectoSeleccionado.idProyecto}/tareas`
     );
 
     setTareas(response.data);

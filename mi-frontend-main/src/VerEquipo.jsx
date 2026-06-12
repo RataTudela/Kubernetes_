@@ -12,7 +12,7 @@ export default function VerEquipo() {
 
   const fetchEquipo = async () => {
     try {
-      const res = await axios.get("http://localhost:8081/api/usuarios/usuario");
+      const res = await axios.get("http://localhost:30081/api/usuarios/usuario");
       setUsuarios(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error al traer el equipo:", error);

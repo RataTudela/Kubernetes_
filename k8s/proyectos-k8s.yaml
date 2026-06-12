@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: proyectos-app
-          image: ratatudela/proyectos-service:v1
+          image: ratatudela/proyectos-service:latest
           ports:
             - containerPort: 8067
           env:

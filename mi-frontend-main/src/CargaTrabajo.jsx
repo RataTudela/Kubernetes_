@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_CARGA = "http://localhost:8081/api/usuarios/carga_trabajo";
-const API_PROYECTOS = "http://localhost:8081/api/proyectos"; 
+const API_CARGA = "http://localhost:30081/api/usuarios/carga_trabajo";
+const API_PROYECTOS = "http://localhost:30081/api/proyectos"; 
 
 export default function CargaTrabajo({ usuarioId, nombreUsuario, estadoUsuario, alCerrar }) {
   const [cargas, setCargas] = useState([]);

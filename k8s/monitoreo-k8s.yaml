@@ -16,9 +16,18 @@ spec:
     spec:
       containers:
         - name: monitoreo-app
-          image: ratatudela/monitoreo-service:v1 
+          image: ratatudela/monitoreo-service:latest
           ports:
             - containerPort: 8000
+          env:
+            - name: PORT
+              value: "8000"
+            - name: DATABASE_URL
+              value: "postgresql://neondb_owner:npg_DOr32IgmeUGC@ep-jolly-forest-a4hn1jmr-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+            - name: USUARIOS_SERVICE_URL
+              value: "http://usuarios-service:8080"
+            - name: PROYECTOS_SERVICE_URL
+              value: "http://proyectos-service:8067"
 ---
 apiVersion: v1
 kind: Service

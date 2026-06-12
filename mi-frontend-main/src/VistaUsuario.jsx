@@ -6,26 +6,25 @@ export default function VistaUsuario() {
   const [cargas, setCargas] = useState([]);
   const [disponibilidad, setDisponibilidad] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [updatingId, setUpdatingId] = useState(null); // Estado para controlar qué checkbox está cargando
+  const [updatingId, setUpdatingId] = useState(null); 
   
   const usuarioLocal = JSON.parse(localStorage.getItem("usuarioActual"));
 
   const confirmarTarea = async (idTarea, idCarga) => {
-  try {
-    setUpdatingId(idCarga);
-    await axios.patch(`http://localhost:8081/api/usuarios/carga_trabajo/finalizar-tarea/${idTarea}/carga/${idCarga}`);
-    
-    console.log(`Solicitud de finalización enviada para la tarea ID: ${idTarea}`);
+    try {
+      setUpdatingId(idCarga);
+      await axios.patch(`http://localhost:30081/api/usuarios/carga_trabajo/finalizar-tarea/${idTarea}/carga/${idCarga}`);
+      
+      console.log(`Solicitud de finalización enviada para la tarea ID: ${idTarea}`);
+      setCargas(prevCargas => prevCargas.filter(item => item.id_carga !== idCarga));
 
-    setCargas(prevCargas => prevCargas.filter(item => item.id_carga !== idCarga));
-
-  } catch (error) {
-    console.error("Error al intentar finalizar la tarea:", error);
-    alert("No se pudo completar la tarea. Inténtalo de nuevo.");
-  } finally {
-    setUpdatingId(null);
-  }
-};
+    } catch (error) {
+      console.error("Error al intentar finalizar la tarea:", error);
+      alert("No se pudo completar la tarea. Inténtalo de nuevo.");
+    } finally {
+      setUpdatingId(null);
+    }
+  };
 
   useEffect(() => {
     if (usuarioLocal && usuarioLocal.id_usuario) {
@@ -35,9 +34,10 @@ export default function VistaUsuario() {
 
   const fetchDatos = async (id) => {
     try {
-      const resCarga = await axios.get(`http://localhost:8081/api/usuarios/carga_trabajo/usuario/${id}`);
+      const resCarga = await axios.get(`http://localhost:30081/api/usuarios/carga_trabajo/usuario/${id}`);
       setCargas(resCarga.data);
-      const resDispo = await axios.get(`http://localhost:8081/api/usuarios/disponibilidad/${id}`);
+      
+      const resDispo = await axios.get(`http://localhost:30081/api/usuarios/disponibilidad/${id}`);
       setDisponibilidad(resDispo.data);
     } catch (error) {
       console.error("Error al traer datos del servidor:", error);

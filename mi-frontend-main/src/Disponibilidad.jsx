@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_DISPO = "http://localhost:8081/api/usuarios/disponibilidad";
+const API_DISPO = "http://localhost:30081/api/usuarios/disponibilidad";
 
 export default function Disponibilidades({ usuarioId, nombreUsuario, alCerrar }) {
   const [fechas, setFechas] = useState([]);

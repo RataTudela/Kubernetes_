@@ -3,7 +3,7 @@ import axios from "axios";
 import Disponibilidades from "./Disponibilidad.jsx";
 import CargaTrabajo from "./CargaTrabajo.jsx"; 
 
-const API_URL = "http://localhost:8081/api/usuarios/usuario";
+const API_URL = "http://localhost:30081/api/usuarios/usuario";
 
 export default function Usuarios() {
   const [users, setUsers] = useState([]);
