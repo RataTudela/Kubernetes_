@@ -2,25 +2,25 @@ global:
   scrape_interval: 15s 
 
 scrape_configs:
-  # 1. API Gateway (Usa el puerto 8081 según su archivo server.port)
+  # 1. API Gateway (Servicio: gateway-service, Puerto interno: 8081)
   - job_name: 'spring-gateway'
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: ['gateway-service:8081']
 
-  # 2. Tu microservicio de Analítica (FastAPI - Puerto 8000)
+  # 2. Microservicio de Analítica (Servicio: monitoreo-service, Puerto: 8000)
   - job_name: 'fastapi-analitica'
     metrics_path: '/metrics'
     static_configs:
-      - targets: ['analitica-service:8000']
+      - targets: ['monitoreo-service:8000']
 
-  # 3. Microservicio de Gestión de Proyectos (Spring Boot - Puerto 8067 según el Gateway)
+  # 3. Microservicio de Gestión de Proyectos (Servicio: proyectos-service, Puerto: 8067)
   - job_name: 'spring-proyectos'
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: ['proyectos-service:8067']
 
-  # 4. Microservicio de Usuarios y Recursos (Spring Boot - Puerto 8080 según el Gateway)
+  # 4. Microservicio de Usuarios y Recursos (Servicio: usuarios-service, Puerto: 8080)
   - job_name: 'spring-usuarios'
     metrics_path: '/actuator/prometheus'
     static_configs:
