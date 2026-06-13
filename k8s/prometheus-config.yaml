@@ -9,18 +9,25 @@ data:
     global:
       scrape_interval: 15s 
     scrape_configs:
+      # 1. API Gateway (Usa el puerto interno del contenedor)
       - job_name: 'spring-gateway'
         metrics_path: '/actuator/prometheus'
         static_configs:
           - targets: ['gateway-service:8081']
+
+      # 2. Microservicio de Analítica
       - job_name: 'fastapi-analitica'
         metrics_path: '/metrics'
         static_configs:
           - targets: ['monitoreo-service:8000']
+
+      # 3. Microservicio de Gestión de Proyectos
       - job_name: 'spring-proyectos'
         metrics_path: '/actuator/prometheus'
         static_configs:
           - targets: ['proyectos-service:8067']
+
+      # 4. Microservicio de Usuarios y Recursos
       - job_name: 'spring-usuarios'
         metrics_path: '/actuator/prometheus'
         static_configs:
