@@ -12,20 +12,29 @@ spec:
       labels:
         app: grafana
     spec:
+      securityContext:
+        fsGroup: 472  # Corrección para Docker Desktop: Da permisos correctos al volumen de Grafana
       containers:
         - name: grafana
           image: grafana/grafana:latest
           ports:
             - containerPort: 3000
+          volumeMounts:
+            - name: grafana-storage
+              mountPath: /var/lib/grafana
+      volumes:
+        - name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: grafana-service
 spec:
-  type: LoadBalancer
+  type: LoadBalancer # Docker Desktop mapeará esto mágicamente a tu localhost
   selector:
     app: grafana
   ports:
-    - port: 30030      # Puerto para escribir en el navegador (ej: localhost:30030)
-      targetPort: 3000  # Puerto interno del contenedor de Grafana
+    - port: 3000       # Acceso interno del clúster Y externo en tu navegador: http://localhost:3000
+      targetPort: 3000 # Puerto interno del contenedor

@@ -23,10 +23,15 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/prometheus/
+            - name: prometheus-storage
+              mountPath: /prometheus/
       volumes:
         - name: config-volume
           configMap:
             name: prometheus-server-conf
+        - name: prometheus-storage
+          persistentVolumeClaim:
+            claimName: prometheus-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -39,4 +44,4 @@ spec:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-  type: ClusterIP # Se mantiene interno, solo Grafana necesita hablar con él
+  type: ClusterIP # Se mantiene interno. Solo Grafana hablará con él.
