@@ -34,8 +34,10 @@ kind: Service
 metadata:
   name: monitoreo-service
 spec:
+  type: LoadBalancer    
   ports:
-    - port: 8000
+    - port: 8000         
       targetPort: 8000
+      nodePort: 30084    
   selector:
     app: monitoreo

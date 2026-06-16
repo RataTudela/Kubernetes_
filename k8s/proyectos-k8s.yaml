@@ -28,8 +28,10 @@ kind: Service
 metadata:
   name: proyectos-service
 spec:
+  type: LoadBalancer    
   ports:
-    - port: 8067
+    - port: 8067         
       targetPort: 8067
+      nodePort: 30083    
   selector:
     app: proyectos
