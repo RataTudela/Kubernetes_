@@ -44,4 +44,4 @@ spec:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-  type: ClusterIP # Se mantiene interno. Solo Grafana hablará con él.
+  type: ClusterIP 

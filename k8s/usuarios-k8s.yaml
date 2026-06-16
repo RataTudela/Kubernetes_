@@ -28,8 +28,10 @@ kind: Service
 metadata:
   name: usuarios-service 
 spec:
+  type: LoadBalancer    
   ports:
-    - port: 8080
+    - port: 8080         
       targetPort: 8080
+      nodePort: 30082    
   selector:
     app: usuarios
