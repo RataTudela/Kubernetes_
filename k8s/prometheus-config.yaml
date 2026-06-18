@@ -32,3 +32,9 @@ data:
         metrics_path: '/actuator/prometheus'
         static_configs:
           - targets: ['usuarios-service:8080']
+
+      # 5. Broker de Mensajería RabbitMQ
+      - job_name: 'rabbitmq'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['rabbitmq-service:15692']

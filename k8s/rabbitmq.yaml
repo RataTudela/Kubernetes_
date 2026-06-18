@@ -18,6 +18,7 @@ spec:
         ports:
         - containerPort: 5672
         - containerPort: 15672
+        - containerPort: 15692 # 👈 Añadir el puerto nativo de métricas de RabbitMQ
 ---
 apiVersion: v1
 kind: Service
@@ -31,3 +32,6 @@ spec:
       port: 5672
     - name: management
       port: 15672
+    - name: prometheus # 👈 Añadir esto para que Prometheus pueda acceder internamente
+      port: 15692
+      targetPort: 15692
